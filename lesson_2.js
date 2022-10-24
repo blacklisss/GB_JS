@@ -111,7 +111,6 @@ function getOp(a,b,op) {
 
 function Task_6() {
     console.log("0 == undefined = " + (0 == undefined));
-    // undefined - это не инициализированная переменная
-    // 0 - это конкретное значение
+    // Нестрогое равенство возвращает false, потому что undefined равно только null, undefined и ничему больше.
 }
 
