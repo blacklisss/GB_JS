@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 6. Задание 3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+          crossorigin="anonymous"/>
+    <style>
+        i {
+            font-size: 50px;
+        }
+
+        .golden {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+<!--
+Необязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+<div class="stars_container">
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+</div>
+
+<script>
+    "use strict";
+
+    /*
+    1. При наведении на любую из звезд, данной звезде должен ставиться класс
+    golden, также такой класс должен ставиться всем звездам до нее слева.
+    */
+    document.querySelector('.stars_container').addEventListener('mouseover', e => {
+        if (!e.target.classList.contains('fa-star')) {
+            return;
+        }
+
+        let elements = [...e.target.parentNode.children];
+        elements.slice(0, (elements.findIndex(item => item === e.target)+1)).forEach( el => el.classList.add('golden'));
+    });
+
+    /*
+    2. Когда мы уводим курсор мыши от звезды, все поставленные классы из первого
+    задания должны быть удалены.
+     */
+    document.querySelector('.stars_container').addEventListener('mouseout', e => {
+        if (!e.target.classList.contains('fa-star')) {
+            return;
+        }
+        let element = e.target;
+        do {
+            element.classList.remove('golden');
+            element = element.previousElementSibling;
+        } while (element);
+    });
+
+    /*
+    3. Когда мы переводим мышь от одной звезды к другой, у нас могут мигать
+    звезды (временно могут становиться черными). Почему так? Напишите словами.
+    Можем ли мы это исправить? Если да, то предложите решение.
+    */
+    /*
+        Между звездами есть текстовые ноды, и попадая мышью на них, происходит событие mouseout у одной звезды, но не
+        происходит mouseover у следующей/предыдущей
+        Как исправить:
+        1) Записать элементы звезд в одну строчку без пробелов
+        2) У родительского элемента поставить display:flex
+        3) Удалить текстовые ноды с помощью JS
+     */
+    document.querySelector('.stars_container').childNodes.forEach(node => {
+        if (node.nodeType === 3) {
+            node.remove();
+        }
+    });
+
+</script>
+</body>
+</html>
